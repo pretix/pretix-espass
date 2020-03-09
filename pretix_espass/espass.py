@@ -8,7 +8,7 @@ import json
 
 import pytz
 from django import forms
-from django.utils.translation import ugettext, ugettext_lazy as _
+from django.utils.translation import gettext, gettext_lazy as _
 from django.core.files.storage import default_storage
 from pretix.base.models import Order
 from pretix.base.ticketoutput import BaseTicketOutput
@@ -86,32 +86,32 @@ class EspassOutput(BaseTicketOutput):
                 'fields': [
                     {
                         "hide": False,
-                        "label": ugettext('Product'),
+                        "label": gettext('Product'),
                         "value": ticket
                     },
                     {
                         "hide": True,
-                        "label": ugettext('Ordered by'),
+                        "label": gettext('Ordered by'),
                         "value": order.email
                     },
                     {
                         "hide": True,
-                        "label": ugettext('Order code'),
+                        "label": gettext('Order code'),
                         "value": order.code
                     },
                     {
                         "hide": True,
-                        "label": ugettext('Organizer'),
+                        "label": gettext('Organizer'),
                         "value": str(order.event.organizer)
                     },
                     {
                         "hide": False,
-                        "label": ugettext('From'),
+                        "label": gettext('From'),
                         "value": order.event.get_date_from_display(tz)
                     },
                     {
                         "hide": True,
-                        "label": ugettext('Website'),
+                        "label": gettext('Website'),
                         "value": build_absolute_uri(order.event, 'presale:event.index')
                     },
                 ]
@@ -120,21 +120,21 @@ class EspassOutput(BaseTicketOutput):
         if order.event.date_to:
             data["calendarTimespan"]["to"] = order.event.date_to.isoformat()
             data["fields"].append({
-                "label": ugettext('To'),
+                "label": gettext('To'),
                 "value": order.event.get_date_to_display(tz),
                 "hide": False
             })
 
         if order_position.attendee_name:
             data["fields"].append({
-                "label": ugettext('Attendee name'),
+                "label": gettext('Attendee name'),
                 "value": order_position.attendee_name,
                 "hide": False
             })
 
         if order.event.settings.contact_mail:
             data["fields"].append({
-                "label": ugettext('Organizer contact'),
+                "label": gettext('Organizer contact'),
                 "value": order.event.settings.contact_mail,
                 "hide": False
             })
